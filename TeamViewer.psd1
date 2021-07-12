@@ -1,6 +1,6 @@
 @{
     # Script module or binary module file associated with this manifest.
-    RootModule = 'ModuleName.psm1'
+    RootModule = 'TeamViewer.psm1'
 
     # Version number of this module.
     ModuleVersion = '0.0.0'
@@ -9,7 +9,7 @@
     # CompatiblePSEditions = @()
 
     # ID used to uniquely identify this module
-    GUID = ''
+    GUID = '9960e36e-61cc-48ab-b831-b715f51b9501'
 
     # Author of this module
     Author = 'Devyn Spencer'
@@ -21,7 +21,7 @@
     Copyright = '(c) 2020 Devyn Spencer. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'PowerShell module focused on x, y, and z.'
+    Description = 'PowerShell module for interacting with the TeamViewer API.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '5.1'
@@ -89,21 +89,21 @@
             Tags = @()
 
             # A URL to the license for this module.
-            LicenseUri = 'https://raw.githubusercontent.com/devynspencer/powershell-template/master/LICENSE'
+            LicenseUri = 'https://raw.githubusercontent.com/devynspencer/powershell-teamviewer/master/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/devynspencer/powershell-template'
+            ProjectUri = 'https://github.com/devynspencer/powershell-teamviewer'
 
             # A URL to an icon representing this module.
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://raw.githubusercontent.com/devynspencer/powershell-template/main/README.md'
+            ReleaseNotes = 'https://raw.githubusercontent.com/devynspencer/powershell-teamviewer/main/README.md'
         }
     }
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'https://raw.githubusercontent.com/devynspencer/powershell-template/main/README.md'
+    HelpInfoURI = 'https://raw.githubusercontent.com/devynspencer/powershell-teamviewer/main/README.md'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
