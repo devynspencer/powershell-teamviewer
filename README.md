@@ -1,2 +1,3 @@
-# powershell-template
-Module template for creating ... PowerShell modules with a consistent look and feel.
+# PowerShell TeamViewer
+Interact with the TeamViewer API using PowerShell.
+
