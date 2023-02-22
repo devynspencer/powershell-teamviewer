@@ -1,36 +1,73 @@
 # PowerShell TeamViewer
 Interact with the TeamViewer API using PowerShell.
 
-## Install
-Install from GitHub source:
+## Getting Started
 
 ```powershell
-git clone 'https://github.com/devynspencer/powershell-teamviewer'
-cd .\powershell-sysadmin
+cd ~\Downloads
+git clone https://github.com/devynspencer/powershell-teamviewer
+
+$UserModulesPath = ($env:PSModulePath -split ";")[0]
+Copy-Item -Recurse "~\Downloads\powershell-teamviewer\TeamViewer" "$UserModulesPath\TeamViewer"
+Import-Module -Force -Verbose TeamViewer
 ```
 
-## Repositories
-Configure local NuGet feed for publishing and/or staging PowerShell modules:
+### Dependencies
+
+This project uses the [Microsoft.PowerShell.SecretStore](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.secretstore/?view=ps-modules) module to simplify management of API tokens and other secrets. This requires the installation of a few dependencies:
 
 ```powershell
-$RegisterParams = @{
-    Name = 'Local'
-    SourceLocation = 'C:\temp\packages\PowerShell'
-    PublishLocation = 'C:\temp\packages\PowerShell'
-    InstallationPolicy = 'Trusted'
-}
-
-Register-PSRepository @RegisterParams
+Install-Module -Name "Microsoft.PowerShell.SecretManagement", "Microsoft.PowerShell.SecretStore"
 ```
 
-Publish to local repository:
+### Secret Store
+
+Setup a new secret store to hold TeamViewer passwords, API tokens, and other secrets:
 
 ```powershell
-$PublishParams = @{
-    Path = '.\Sysadmin'
-    Repository = 'Local'
-    NuGetApiKey = ''
-}
+Register-SecretVault -ModuleName Microsoft.PowerShell.SecretStore -Name TeamViewer -Verbose
+Set-SecretStoreConfiguration -Authentication Password -Scope CurrentUser -Interaction None -Confirm:$false
+```
 
-Publish-Module @PublishParams
+### API Token
+
+Generate a new API script token from your [TeamViewer profile](https://login.teamviewer.com/nav/profile/apps), then add it to the secret store:
+
+```powershell
+Unlock-SecretStore # Will prompt for password set in previous step
+
+$ApiToken = "ABCDEFG1234567890HIJKLMNOPQ" # Replace with a real token, obviously
+Set-Secret -Vault TeamViewer -Name TEAMVIEWER_API_TOKEN -Secret $ApiToken
+```
+
+## Examples
+
+Get TeamViewer devices, and filter based on specific criteria:
+
+```powershell
+Get-TeamViewerDevice -GroupName "Developer Workstations"
+
+# Alternatively
+Get-TeamViewerGroupMember -Identity "Developer Workstations"
+```
+
+Rename a device:
+
+```powershell
+Set-TeamViewerDevice -Id 1095514322 -Name "PRDWRK01"
+```
+
+Update group memberships:
+
+```powershell
+Add-TeamViewerGroupMember -Identity "Developer Workstations" -Members "PRDWRK01"
+
+# Alternatively
+Set-TeamViewerDevice -Id 1095514322 -Group 1234567
+```
+
+See the built-in help for information on each function:
+
+```powershell
+help Get-TeamViewerDevice -Detailed
 ```
